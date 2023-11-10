@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BLE TERMINAL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .custom-border {
+            border: 4px solid #2d5b88; /* Màu viền đậy, có thể thay đổi màu sắc bằng mã màu khác */
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand {
+            font-size: 24px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .alert-info {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+        h4 {
+            color: #f32727;
+        }
+        .text-log {
+            width: 100%;
+        }
+        footer {
+            background-color: #343a40;
+            color: #fff;
+        }
+    </style>
+    <!-- Sử dụng Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow">
+        <div class="container">
+          <a class="navbar-brand" href="#" id="navbarTitle">STATUS</a>
+          <div class="d-flex">
+            <button class="btn btn-primary" id="toggleButton" onclick="toggleFunction()">SCAN</button>
+          </div>
+        </div>
+    </nav>
+    <div class="custom-border container">
+        <h4 class="text-center mt-2"><strong>JDY-33</strong></h4>
+        <div class="card card-body">
+            <h5 class="card-title">TERMINAL</h5>
+            <div class="row">
+                <div class="col-sm-12 mb-3">
+                    <textarea class="form-control text-log" id="textareaNotification" style="height: 200px"></textarea>
+                </div>
+            </div>
+            <div class="row">
+            <div class="form-check form-check-inline ml-3">
+                <input type="checkbox" class="form-check-input" id="myCheckbox" onchange="performFunction()">
+                <label class="form-check-label" for="myCheckbox">Show</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="checkbox" class="form-check-input" id="Checkbox" onchange="Checkshowtime()">
+                <label class="form-check-label" for="Checkbox">Time</label>
+            </div>
+            </div>
+        </div>
+</div>
+    </body>
+    <footer class="bg-dark text-white text-center py-2">
+        &copy; PTIT TEAM
+    </footer>
+
+    <!-- Sử dụng Bootstrap JavaScript (nếu cần) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        var deviceName = 'JDY-33-BLE';
+        var bleService = '0000ffe0-0000-1000-8000-00805f9b34fb';
+        var bleCharacteristic = '0000ffe1-0000-1000-8000-00805f9b34fb';
+        var gattCharacteristic;
+        var bluetoothDeviceDetected;
+        function isWebBluetoothEnabled() {
+            if (!navigator.bluetooth) {
+            console.log('Web Bluetooth API is not available in this browser!');
+            // log('Web Bluetooth API is not available in this browser!');
+            return false
+            }
+
+            return true
+        }
+        function requestBluetoothDevice() {
+            if(isWebBluetoothEnabled){
+        log1('FINDING...');
+        navigator.bluetooth.requestDevice({
+            filters: [{
+                name: deviceName
+            }],
+            optionalServices: ['0000ffe0-0000-1000-8000-00805f9b34fb'] 
+            })         
+        .then(device => {
+            dev=device;
+            log1(dev.name);
+            console.log('Đang kết nối với', dev);
+            return device.gatt.connect();
+        })
+        .then(server => {
+                console.log('Getting GATT Service...');
+                log1('GET Ser...');
+                return server.getPrimaryService(bleService);
+            })
+            .then(service => {
+                console.log('Getting GATT Characteristic...');
+                log1('GET Cha... ');
+                return service.getCharacteristic(bleCharacteristic);
+            })
+            .then(characteristic => {
+            log1("CONNECTED");
+            gattCharacteristic = characteristic
+            gattCharacteristic.addEventListener('characteristicvaluechanged', handleChangedValue)
+            return gattCharacteristic.startNotifications()
+        })
+        .catch(error => {
+				console.log("Không thể kết nối với thiết bị" + error);
+                // log("Không thể kết nối với thiết bị" + error);
+                log1("ERROR");
+			});
+        }}
+        function disconnect()
+		{
+            log1("STATUS");
+            console.log("Đã ngắt kết nối với: " + dev.name);
+            return dev.gatt.disconnect();
+		}
+        //Hiện thông báo
+        window.onload = function() {
+            alert('Hãy nhấn nút SCAN để bắt đầu tìm kiếm thiết bị Blutooth');
+        };
+        // function Autoscroll() {
+        //     gattCharacteristic.startNotifications()
+        //     .then(_ => {
+        //         console.log('Start reading...');
+        //         //log('Kết nối thành công với Serial Monitor...');
+        //         // document.querySelector('#start').disabled = true;
+        //         // document.querySelector('#stop').disabled = false;
+        //     })
+        //     .catch(error => {
+        //         console.log('[ERROR] Start: ' + error);
+        //         log('[ERROR] Start: ' + error);
+        //     })
+        // }
+
+        // function Unautoscroll() {
+        //     gattCharacteristic.stopNotifications().then(_ => {
+        //         console.log('Đã ngắt kết nối với Serial Monitor...');
+        //        // log('Đã ngắt kết nối với Serial Monitor...');
+        //         // document.querySelector('#start').disabled = false;
+        //         // document.querySelector('#stop').disabled = true;
+        //     })
+        //     .catch(error => {
+        //         console.log('[ERROR] Stop: ' + error);
+        //     })
+        // }
+        let checklog;
+        function performFunction() {
+            const checkbox = document.getElementById("myCheckbox");
+            if (checkbox.checked) {
+                checklog=true;
+            } else {
+                checklog=false;
+            }
+        }
+        let check;
+        function Checkshowtime() {
+            const checkbox = document.getElementById("Checkbox");
+            if (checkbox.checked) {
+               check=true;
+            } else {
+               check=false;
+            }
+        }
+        
+        function handleChangedValue(event) {
+        let data = event.target.value;
+        let i=0;
+        // Khởi tạo một mảng để chứa dữ liệu từ mảng uint8_t
+        let dataArray = new Uint8Array(data.buffer);
+        let kytu=String.fromCharCode(dataArray[0]);
+        if(kytu=="1" || kytu=="2"){
+            i=1;
+        }
+        // Khởi tạo chuỗi để chứa dữ liệu từ mảng uint8_t
+        let valueString = '';
+
+        // Lặp qua mảng để trích xuất dữ liệu từng phần tử
+        for (i; i < dataArray.length; i++) {
+            valueString += String.fromCharCode(dataArray[i]);
+        }
+        if(kytu==1){
+            valueString=valueString+"*C";
+            logValue1(valueString);
+        }
+        else if(kytu==2){
+            valueString=valueString+"%";
+            logValue2(valueString);
+        }
+        else{
+        var now = new Date();
+        console.log(' -> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + valueString);
+        $('#battery_level').text(valueString);
+        log(valueString);}
+    }
+    //Hiển thị văn bản
+    function log(text) {
+            if(checklog){
+            const now = new Date();
+            const prefixlog = now.getHours() + ':' + now.getMinutes() + ':'  + now.getSeconds() + ' -> ';
+
+           if(check) $('.text-log').val($('.text-log').val() + prefixlog + text );
+           else  $('.text-log').val($('.text-log').val() + text);
+        }
+        }
+    let isScanning = true;
+    function toggleFunction() {
+        const button = document.getElementById("toggleButton");
+
+        if (isScanning) {
+            button.innerText = "DISCONNECT";
+            requestBluetoothDevice();
+            isScanning = false;
+        } else {
+            button.innerText = "SCAN";
+            disconnect();
+            isScanning = true;
+        }
+    }
+    function log1(text){
+        const navbarTitle = document.getElementById('navbarTitle');
+        navbarTitle.textContent = text;
+    }
+    function logValue1(text){
+        const navbarTitle = document.getElementById('Value1');
+        navbarTitle.textContent = text;
+    }
+    function logValue2(text){
+        const navbarTitle = document.getElementById('Value2');
+        navbarTitle.textContent = text;
+    }
+    </script>
+</body>
+</html>
