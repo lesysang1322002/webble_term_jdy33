@@ -69,7 +69,7 @@
         <div class="card card-body">
             <h5 class="card-title">TERMINAL</h5>
             <div class="input-container">
-                <input id="input" type="text" class="input" placeholder="New Message >...">
+                <input id="input" type="text" class="input" placeholder="New Message ->...">
                 <button class="btn-primary" id="btsend" onclick="send()">Send</button>
             </div>
             <div class="row">
@@ -79,8 +79,8 @@
             </div>
             <div class="row">
             <div class="form-check form-check-inline ml-3">
-                <input type="checkbox" class="form-check-input" id="myCheckbox" onchange="performFunction()">
-                <label class="form-check-label" for="myCheckbox">Show</label>
+                <input type="checkbox" class="form-check-input" id="Checkauto" onchange="Checkautoscroll()">
+                <label class="form-check-label" for="myCheckbox">Autoscroll</label>
             </div>
             <div class="form-check form-check-inline">
                 <input type="checkbox" class="form-check-input" id="Checkbox" onchange="Checkshowtime()">
@@ -176,13 +176,18 @@
 			}
 			return buf;
 		}
-        let checklog;
-        function performFunction() {
-            const checkbox = document.getElementById("myCheckbox");
+        function scrollToBottom() {
+        var textarea = document.getElementById("textareaNotification");
+        textarea.scrollTop = textarea.scrollHeight;
+        }
+
+        let checkautoscroll;
+        function Checkautoscroll() {
+            const checkbox = document.getElementById("Checkauto");
             if (checkbox.checked) {
-                checklog=true;
+                checkautoscroll=true;
             } else {
-                checklog=false;
+                checkautoscroll=false;
             }
         }
         let check;
@@ -223,17 +228,17 @@
         var now = new Date();
         console.log(' -> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + valueString);
         $('#battery_level').text(valueString);
-        log(valueString);}
+        log(valueString);
+        if(checkautoscroll) scrollToBottom();
+        }
     }
     //Hiển thị văn bản
     function log(text) {
-            if(checklog){
             const now = new Date();
             const prefixlog = now.getHours() + ':' + now.getMinutes() + ':'  + now.getSeconds() + ' -> ';
 
            if(check) $('.text-log').val($('.text-log').val() + prefixlog + text );
            else  $('.text-log').val($('.text-log').val() + text);
-        }
         }
     let isScanning = true;
     function toggleFunction() {
