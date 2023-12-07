@@ -39,6 +39,18 @@
             background-color: #343a40;
             color: #fff;
         }
+        .input-container {
+        display: inline-block;
+        }
+
+        .input {
+            width: 40%;
+        }
+
+        .btsend {
+            width: 8%;
+            margin-left: 2%;
+        }
     </style>
     <!-- Sử dụng Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -56,8 +68,12 @@
         <h4 class="text-center mt-2"><strong>JDY-33</strong></h4>
         <div class="card card-body">
             <h5 class="card-title">TERMINAL</h5>
+            <div class="input-container">
+                <input id="input" type="text" class="input" placeholder="New Message >...">
+                <button class="btn-primary" id="btsend" onclick="send()">Send</button>
+            </div>
             <div class="row">
-                <div class="col-sm-12 mb-3">
+                <div class="col-sm-12 mb-3 mt-2">
                     <textarea class="form-control text-log" id="textareaNotification" style="height: 200px"></textarea>
                 </div>
             </div>
@@ -144,31 +160,22 @@
         window.onload = function() {
             alert('Hãy nhấn nút SCAN để bắt đầu tìm kiếm thiết bị Blutooth');
         };
-        // function Autoscroll() {
-        //     gattCharacteristic.startNotifications()
-        //     .then(_ => {
-        //         console.log('Start reading...');
-        //         //log('Kết nối thành công với Serial Monitor...');
-        //         // document.querySelector('#start').disabled = true;
-        //         // document.querySelector('#stop').disabled = false;
-        //     })
-        //     .catch(error => {
-        //         console.log('[ERROR] Start: ' + error);
-        //         log('[ERROR] Start: ' + error);
-        //     })
-        // }
-
-        // function Unautoscroll() {
-        //     gattCharacteristic.stopNotifications().then(_ => {
-        //         console.log('Đã ngắt kết nối với Serial Monitor...');
-        //        // log('Đã ngắt kết nối với Serial Monitor...');
-        //         // document.querySelector('#start').disabled = false;
-        //         // document.querySelector('#stop').disabled = true;
-        //     })
-        //     .catch(error => {
-        //         console.log('[ERROR] Stop: ' + error);
-        //     })
-        // }
+        function send()
+		{
+			var data = document.getElementById("input").value;
+			log("You -> " + data + "\n");
+			gattCharacteristic.writeValue(str2ab(data+"\n"))
+			document.getElementById("input").value = "";
+		}
+        function str2ab(str)
+		{
+			var buf = new ArrayBuffer(str.length);
+			var bufView = new Uint8Array(buf);
+			for (var i = 0, l = str.length; i < l; i++) {
+				bufView[i] = str.charCodeAt(i);
+			}
+			return buf;
+		}
         let checklog;
         function performFunction() {
             const checkbox = document.getElementById("myCheckbox");
