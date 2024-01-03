@@ -6,7 +6,7 @@
     <title>BLE JDY-33</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
         }
         .custom-border {
             border: 4px solid #2d5b88; /* Màu viền đậy, có thể thay đổi màu sắc bằng mã màu khác */
@@ -205,32 +205,17 @@
         let i=0;
         // Khởi tạo một mảng để chứa dữ liệu từ mảng uint8_t
         let dataArray = new Uint8Array(data.buffer);
-        let kytu=String.fromCharCode(dataArray[0]);
-        if(kytu=="1" || kytu=="2"){
-            i=1;
-        }
         // Khởi tạo chuỗi để chứa dữ liệu từ mảng uint8_t
         let valueString = '';
-
         // Lặp qua mảng để trích xuất dữ liệu từng phần tử
         for (i; i < dataArray.length; i++) {
             valueString += String.fromCharCode(dataArray[i]);
         }
-        if(kytu==1){
-            valueString=valueString+"*C";
-            logValue1(valueString);
-        }
-        else if(kytu==2){
-            valueString=valueString+"%";
-            logValue2(valueString);
-        }
-        else{
         var now = new Date();
-        console.log(' -> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + valueString);
+        console.log(valueString);
         $('#battery_level').text(valueString);
         log(valueString);
         if(checkautoscroll) scrollToBottom();
-        }
     }
     //Hiển thị văn bản
     function log(text) {
