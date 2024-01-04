@@ -6,10 +6,13 @@
     <title>BLE JDY-33</title>
     <style>
         body {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Arial', sans-serif;
         }
         .custom-border {
             border: 4px solid #2d5b88; /* Màu viền đậy, có thể thay đổi màu sắc bằng mã màu khác */
+        }
+        .monospace {
+            font-family: 'Roboto Mono', monospace;
         }
         .navbar {
             background-color: #343a40;
@@ -52,6 +55,7 @@
             margin-left: 2%;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700">
     <!-- Sử dụng Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -76,7 +80,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 mb-3 mt-2">
-                    <textarea class="form-control text-log" id="textareaNotification" style="height: 300px"></textarea>
+                    <textarea class="form-control text-log monospace" id="textareaNotification" style="height: 300px"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -90,8 +94,8 @@
             </div>
             </div>
         </div>
-</div>
-    </body>
+    </div>
+</body>
     <footer class="bg-dark text-white text-center py-2">
         &copy; PTIT TEAM
     </footer>
@@ -213,7 +217,6 @@
         }
         var now = new Date();
         console.log(valueString);
-        $('#battery_level').text(valueString);
         log(valueString);
         if(checkautoscroll) scrollToBottom();
     }
