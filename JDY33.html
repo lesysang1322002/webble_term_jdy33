@@ -125,29 +125,30 @@
         }
         function requestBluetoothDevice() {
             if(isWebBluetoothEnabled){
-        log1('FINDING...');
+        logstatus('FINDING...');
         navigator.bluetooth.requestDevice({
             filters: [{
                 services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }] 
             })         
         .then(device => {
             dev=device;
-            log1(dev.name);
+            logstatus(dev.name);
             console.log('Đang kết nối với', dev);
             return device.gatt.connect();
         })
         .then(server => {
                 console.log('Getting GATT Service...');
-                log1('GET Ser...');
+                logstatus('GET Ser...');
                 return server.getPrimaryService(bleService);
             })
             .then(service => {
                 console.log('Getting GATT Characteristic...');
-                log1('GET Cha... ');
+                logstatus('GET Cha... ');
                 return service.getCharacteristic(bleCharacteristic);
             })
             .then(characteristic => {
-            log1("CONNECTED");
+                logstatus("CONNECTED");
+                button.innerText = "DISCONNECT";
             gattCharacteristic = characteristic
             gattCharacteristic.addEventListener('characteristicvaluechanged', handleChangedValue)
             return gattCharacteristic.startNotifications()
@@ -155,12 +156,12 @@
         .catch(error => {
 				console.log("Không thể kết nối với thiết bị" + error);
                 // log("Không thể kết nối với thiết bị" + error);
-                log1("ERROR");
+                logstatus("ERROR");
 			});
         }}
         function disconnect()
 		{
-            log1("STATUS");
+            logstatus("STATUS");
             console.log("Đã ngắt kết nối với: " + dev.name);
             return dev.gatt.disconnect();
 		}
@@ -190,8 +191,10 @@
         }
 
         let checkautoscroll;
+        const checkbox = document.getElementById("Checkauto");
+        checkbox.checked=true;
         function Checkautoscroll() {
-            const checkbox = document.getElementById("Checkauto");
+            // const checkbox = document.getElementById("Checkauto");
             if (checkbox.checked) {
                 checkautoscroll=true;
             } else {
@@ -226,18 +229,16 @@
     }
     //Hiển thị văn bản
     function log(text) {
-            const now = new Date();
-            const prefixlog = now.getHours() + ':' + now.getMinutes() + ':'  + now.getSeconds() + ' -> ';
-
+        const now = new Date();
+        const prefixlog = now.getHours() + ':' + now.getMinutes() + ':'  + now.getSeconds() + '.' + now.getMilliseconds() + ' -> ';
            if(check) $('.text-log').val($('.text-log').val() + prefixlog + text );
            else  $('.text-log').val($('.text-log').val() + text);
         }
     let isScanning = true;
+    const button = document.getElementById("toggleButton");
     function toggleFunction() {
-        const button = document.getElementById("toggleButton");
 
         if (isScanning) {
-            button.innerText = "DISCONNECT";
             requestBluetoothDevice();
             isScanning = false;
         } else {
@@ -246,16 +247,8 @@
             isScanning = true;
         }
     }
-    function log1(text){
+    function  logstatus(text){
         const navbarTitle = document.getElementById('navbarTitle');
-        navbarTitle.textContent = text;
-    }
-    function logValue1(text){
-        const navbarTitle = document.getElementById('Value1');
-        navbarTitle.textContent = text;
-    }
-    function logValue2(text){
-        const navbarTitle = document.getElementById('Value2');
         navbarTitle.textContent = text;
     }
     </script>
