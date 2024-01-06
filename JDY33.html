@@ -147,7 +147,7 @@
                 return service.getCharacteristic(bleCharacteristic);
             })
             .then(characteristic => {
-                logstatus("CONNECTED");
+                logstatus("CONNED " + dev.name);
                 button.innerText = "DISCONNECT";
             gattCharacteristic = characteristic
             gattCharacteristic.addEventListener('characteristicvaluechanged', handleChangedValue)
