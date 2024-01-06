@@ -155,7 +155,7 @@
         })
         .catch(error => {
 				console.log("Không thể kết nối với thiết bị" + error);
-                // log("Không thể kết nối với thiết bị" + error);
+                // log("Không thể kết nối với thiết bị: " + error);
                 logstatus("ERROR");
 			});
         }}
@@ -190,11 +190,10 @@
         textarea.scrollTop = textarea.scrollHeight;
         }
 
-        let checkautoscroll;
+        let checkautoscroll=true;
         const checkbox = document.getElementById("Checkauto");
         checkbox.checked=true;
         function Checkautoscroll() {
-            // const checkbox = document.getElementById("Checkauto");
             if (checkbox.checked) {
                 checkautoscroll=true;
             } else {
@@ -212,20 +211,31 @@
         }
         
         function handleChangedValue(event) {
+        // let data = event.target.value;
+        // let i=0;
+        // // Khởi tạo một mảng để chứa dữ liệu từ mảng uint8_t
+        // let dataArray = new Uint8Array(data.buffer);
+        // // Khởi tạo chuỗi để chứa dữ liệu từ mảng uint8_t
+        // let valueString = '';
+        // // Lặp qua mảng để trích xuất dữ liệu từng phần tử
+        // for (i; i < dataArray.length; i++) {
+        //     valueString += String.fromCharCode(dataArray[i]);
+        // }
+        // var now = new Date();
+        // console.log(valueString);
+        // log(valueString);
+        // if(checkautoscroll) scrollToBottom();
         let data = event.target.value;
-        let i=0;
-        // Khởi tạo một mảng để chứa dữ liệu từ mảng uint8_t
+        console.log('Received data:', data);
         let dataArray = new Uint8Array(data.buffer);
-        // Khởi tạo chuỗi để chứa dữ liệu từ mảng uint8_t
-        let valueString = '';
-        // Lặp qua mảng để trích xuất dữ liệu từng phần tử
-        for (i; i < dataArray.length; i++) {
-            valueString += String.fromCharCode(dataArray[i]);
-        }
+        // Sử dụng TextDecoder để chuyển đổi Uint8Array thành chuỗi
+        let textDecoder = new TextDecoder('utf-8');
+        let valueString = textDecoder.decode(dataArray);
+        valueString = valueString.replace(/(\r)/gm, '');
         var now = new Date();
-        console.log(valueString);
+        console.log('Convert2Str:',valueString);
         log(valueString);
-        if(checkautoscroll) scrollToBottom();
+        if (checkautoscroll) scrollToBottom();
     }
     //Hiển thị văn bản
     function log(text) {
