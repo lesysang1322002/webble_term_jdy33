@@ -248,17 +248,17 @@
            if(check) $('.text-log').val($('.text-log').val() + prefixlog + text );
            else  $('.text-log').val($('.text-log').val() + text);
         }
-    let isScanning = true;
+    // let isScanning = true;
     const button = document.getElementById("toggleButton");
     function toggleFunction() {
 
         if (button.innerText == "SCAN") {
             requestBluetoothDevice();
-            isScanning = false;
+            // isScanning = false;
         } else {
             button.innerText = "SCAN";
             disconnect();
-            isScanning = true;
+            // isScanning = true;
         }
     }
     function  logstatus(text){
