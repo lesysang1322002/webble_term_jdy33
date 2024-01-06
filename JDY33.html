@@ -154,9 +154,13 @@
             return gattCharacteristic.startNotifications()
         })
         .catch(error => {
-				console.log("Không thể kết nối với thiết bị" + error);
-                // log("Không thể kết nối với thiết bị: " + error);
-                logstatus("ERROR");
+            if (error instanceof DOMException && error.name === 'NotFoundError' && error.message === 'User cancelled the requestDevice() chooser.') {
+            console.log("Người dùng đã hủy yêu cầu kết nối thiết bị.");
+            logstatus("NOT CONNECTED");
+            } else {
+            console.log("Không thể kết nối với thiết bị: " + error);
+            logstatus("ERROR");
+            }
 			});
         }}
         function disconnect()
