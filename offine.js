@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["JDY33.html","md5sum_generated_hash"],["ble.png","md5sum_generated_hash"]];
+var precacheConfig = [["JDY33.html","md5sum_generated_hash"],["ble.png","md5sum_generated_hash"],["leanbot.js","md5sum_generated_hash"]];
 var cacheName = 'sw-precache-v2-web-lightbulb-' + (self.registration ? self.registration.scope : '');
 
 
