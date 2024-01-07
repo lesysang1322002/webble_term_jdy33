@@ -37,9 +37,12 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["JDY33.html","md5sum_generated_hash"],["ble.png","md5sum_generated_hash"],["leanbot.js","md5sum_generated_hash"]];
+var precacheConfig = [
+    ["JDY33.html", "actual_md5sum_hash_for_JDY33_html"],
+    ["ble.png", "actual_md5sum_hash_for_ble_png"],
+    ["leanbot.js", "actual_md5sum_hash_for_leanbot_js"]
+  ];
 var cacheName = 'sw-precache-v2-web-lightbulb-' + (self.registration ? self.registration.scope : '');
-
 
 var ignoreUrlParametersMatching = [/./];
 

@@ -269,8 +269,8 @@
         const navbarTitle = document.getElementById('navbarTitle');
         navbarTitle.textContent = text;
     }
-    if ('offine' in navigator) {
-    navigator.serviceWorker.register('offine.js');
+    if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('office.js');
     }
     </script>
 </body>
