@@ -38,7 +38,7 @@
 'use strict';
 
 var precacheConfig = [
-    ["JDY33.html", "actual_md5sum_hash_for_JDY33_html"],
+    ["index.html", "actual_md5sum_hash_for_JDY33_html"],
     ["ble.png", "actual_md5sum_hash_for_ble_png"],
     ["manifest.json", "actual_md5sum_hash_for_leanbot_json"]
   ];
