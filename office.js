@@ -40,7 +40,7 @@
 var precacheConfig = [
     ["JDY33.html", "actual_md5sum_hash_for_JDY33_html"],
     ["ble.png", "actual_md5sum_hash_for_ble_png"],
-    ["leanbot.json", "actual_md5sum_hash_for_leanbot_json"]
+    ["manifest.json", "actual_md5sum_hash_for_leanbot_json"]
   ];
 var cacheName = 'sw-precache-v2-web-lightbulb-' + (self.registration ? self.registration.scope : '');
 
