@@ -115,7 +115,11 @@
                 <textarea spellcheck="false" class="form-control text-log monospace" id="textareaNotification" style="height: 440px"></textarea>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-1 mb-1 ">
+                <input id="input" type="text" class="input ml-3" placeholder="Send Message ->...">
+                <button class="ml-auto mr-3 btn-primary" id="btsend" onclick="send()">Send</button>
+            </div>      
+            <div class="row mb-2">
                 <div class="form-check form-check-inline ml-3">
                     <input type="checkbox" class="form-check-input" id="Checkauto" onchange="Checkautoscroll()">
                     <label class="form-check-label" for="myCheckbox">Autoscroll</label>
@@ -128,11 +132,7 @@
                     <button class="mr-1 btn-primary" onclick="clearTextarea()">Clear</button>
                     <button class="mr-3 btn-primary" onclick="copyToClipboard()">Copy</button>
                 </div>
-            </div> 
-            <div class="row mt-2 mb-2 ">
-                    <input id="input" type="text" class="input ml-3" placeholder="Send Message ->...">
-                    <button class="ml-auto mr-3 btn-primary" id="btsend" onclick="send()">Send</button>
-            </div>        
+            </div>   
     </div>
     <script src="script.js"></script>
 </body>
