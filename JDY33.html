@@ -28,7 +28,17 @@
         }
         .btn-primary:hover {
         color: #fff !important; /* Chữ màu trắng khi di chuột qua */
-        background-color: #000 !important; /* Nền đen khi di chuột qua */
+        background-color: #7e6a6a !important; /* Nền đen khi di chuột qua */
+        }
+        .btn-primary-scan {
+            border-radius: 3px;
+            color: #ffffff !important; /* Chữ màu đen */
+            background-color: #2f67b0 !important; /* Nền trắng */
+            border-color: #2f67b0 !important; /* Màu đen cho viền */
+        }
+        .btn-primary-scan:hover {
+        color: #fff !important; /* Chữ màu trắng khi di chuột qua */
+        background-color: #7e6a6a !important; /* Nền đen khi di chuột qua */
         }
         .alert-info {
             background-color: #17a2b8;
@@ -74,7 +84,7 @@
         <div class="container">
           <a class="navbar-brand" href="#" id="navbarTitle">Not Connected</a>
           <div class="d-flex">
-            <button class="btn btn-primary" id="toggleButton" onclick="toggleFunction()">Scan</button>
+            <button class="btn btn-primary-scan" id="toggleButton" onclick="toggleFunction()">Scan</button>
           </div>
         </div>
     </nav>
