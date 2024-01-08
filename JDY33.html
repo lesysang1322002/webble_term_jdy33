@@ -174,7 +174,7 @@
             })         
         .then(device => {
             dev=device;
-            logstatus(dev.name);
+            logstatus("Connect to " + dev.name);
             console.log('Đang kết nối với', dev);
             return device.gatt.connect();
         })
