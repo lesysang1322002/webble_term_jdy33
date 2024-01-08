@@ -1,87 +1,86 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-  
-  .info-container {
-    position: relative;
-  }
-  
-  #infoButton {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  #infoContent {
-    display: none;
-    position: absolute;
-    top: 30px;
-    left: 0;
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
+  font-family: 'Arial', sans-serif;
+}
 .custom-border {
-    border: 4px solid #2f67b0 /* Màu viền đậy, có thể thay đổi màu sắc bằng mã màu khác */
+  border: 4px solid #2f67b0 /* Màu viền đậy, có thể thay đổi màu sắc bằng mã màu khác */
 }
 .monospace {
-    font-family: 'Roboto Mono', monospace;
+  font-family: 'Roboto Mono', monospace;
 }
 .navbar {
-    background-color: #343a40;
+  background-color: #343a40;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .btn-primary {
-    border-radius: 3px;
-    color: #000 !important; /* Chữ màu đen */
-    background-color: #fff !important; /* Nền trắng */
-    border-color: #000 !important; /* Màu đen cho viền */
+  border-radius: 3px;
+  color: #000 !important; /* Chữ màu đen */
+  background-color: #fff !important; /* Nền trắng */
+  border-color: #000 !important; /* Màu đen cho viền */
 }
 .btn-primary-scan {
-    border-radius: 3px;
-    color: #ffffff !important; /* Chữ màu đen */
-    background-color: #2f67b0 !important; /* Nền trắng */
-    border-color: #2f67b0 !important; /* Màu đen cho viền */
+  border-radius: 3px;
+  color: #ffffff !important; /* Chữ màu đen */
+  background-color: #2f67b0 !important; /* Nền trắng */
+  border-color: #2f67b0 !important; /* Màu đen cho viền */
 }
 .alert-info {
-    background-color: #17a2b8;
-    color: #fff;
-}
-h4 {
-    color: #f32727;
+  background-color: #17a2b8;
+  color: #fff;
 }
 body h6 {
-    font-size: 12px;
+  font-size: 12px;
 }
 .text-log {
-    overflow-x: auto; /* Sử dụng thanh cuộn ngang khi nội dung vượt quá kích thước */
-    white-space: nowrap; /* Ngăn chặn xuống dòng khi dòng quá dài */
+  overflow-x: auto; /* Sử dụng thanh cuộn ngang khi nội dung vượt quá kích thước */
+  white-space: nowrap; /* Ngăn chặn xuống dòng khi dòng quá dài */
 }
 footer {
-    background-color: #343a40;
-    color: #fff;
+  background-color: #343a40;
+  color: #fff;
 }
 .input-container {
 display: inline-block;
+align-items: center;
 }
-
+#infoButton {
+background-color: #343a40;;
+color: white;
+border: none;
+font-size: 14px;
+cursor: pointer;
+}
+.info-content {
+display: none;
+position: absolute;
+top: 5px; 
+left: 5px;
+background-color: #f1f1f1;
+padding: 2px;
+border-radius: 5px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+z-index: 1;
+white-space: pre-line; /* Hiển thị thông tin theo hàng dòng */
+line-height: 0.1;
+}
 .input {
-    width: 87%;
+  width: 82%;
 }
 
 .btsend {
-    width: 8%;
-    margin-left: 2%;
+  width: 8%;
+  margin-left: 2%;
 }
 #textareaNotification {
-    font-size: 12px; 
+  font-size: 12px; 
+}
+#navbarTitle {
+margin: 0 auto; /* Căn giữa văn bản "Not Connected" */
+}
+.send-button {
+background: none;
+border: none;
+cursor: pointer;
+font-size: 20px;
 }
