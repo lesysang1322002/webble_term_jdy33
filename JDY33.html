@@ -167,7 +167,7 @@
         }
         function requestBluetoothDevice() {
             if(isWebBluetoothEnabled){
-        logstatus('Finding ...');
+        logstatus('Finding...');
         navigator.bluetooth.requestDevice({
             filters: [{
                 services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }] 
@@ -180,12 +180,12 @@
         })
         .then(server => {
                 console.log('Getting GATT Service...');
-                logstatus('Getting Service ...');
+                logstatus('Getting Service...');
                 return server.getPrimaryService(bleService);
             })
             .then(service => {
                 console.log('Getting GATT Characteristic...');
-                logstatus('Geting Characteristic ...');
+                logstatus('Geting Characteristic...');
                 return service.getCharacteristic(bleCharacteristic);
             })
             .then(characteristic => {
