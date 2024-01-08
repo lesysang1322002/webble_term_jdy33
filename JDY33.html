@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BLE Term</title>
+    <title>Web BLE Terminal</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -27,10 +27,20 @@
             border-color: #000 !important; /* Màu đen cho viền */
         }
         .btn-primary-scan {
+            display: flex;
+            align-items: center;
             border-radius: 3px;
-            color: #ffffff !important; /* Chữ màu đen */
-            background-color: #2f67b0 !important; /* Nền trắng */
-            border-color: #2f67b0 !important; /* Màu đen cho viền */
+            margin: 5px;
+            /* position: relative; */
+            color:  #2f67b0!important; 
+            background-color: #ffffff !important; 
+            border-color:  #ffffff !important;
+            max-width: 100%; /* Đảm bảo kích thước tối đa không vượt quá kích thước của phần tử cha */
+            height: auto; 
+        }
+        .btn-primary-scan img {
+        width: 20px; /* Đặt kích thước chiều rộng mong muốn */
+        height: auto;
         }
         .alert-info {
             background-color: #17a2b8;
@@ -72,7 +82,7 @@
         line-height: 0.1;
         }
         .input {
-            width: 82%;
+            width: 65%;
         }
 
         .btsend {
@@ -83,7 +93,8 @@
             font-size: 12px; 
         }
         #navbarTitle {
-        margin: 0 auto; /* Căn giữa văn bản "Not Connected" */
+        margin: 0 auto; /* Căn giữa văn bản "Scan to connect" */
+        font-size: 16px; 
         }
         .send-button {
         background: none;
@@ -91,6 +102,7 @@
         cursor: pointer;
         font-size: 20px;
         }
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <!-- <link rel="manifest" href="manifest.json" /> -->
@@ -99,34 +111,37 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark shadow" style="padding-left: 0px">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow" style="padding: 0px 0px;">
+        <button class="btn btn-primary-scan" id="toggleButton" onclick="toggleFunction()">
+            <span id="buttonText">Scan</span><img src="ble_logo.png" alt="Scan Icon">  
+        </button>
+        <a class="navbar-brand" href="#" id="navbarTitle" style="color: rgb(218, 79, 79)">Scan to connect</a>
         <div class="info-container">
-                <button id="infoButton"><i class="fas fa-info-circle"></i></button>
-                <div class="info-content" id="infoContent">
-                    <h6><strong>Web BLE Terminal</strong></h6>
-                    <h6><strong>Device: JDY-33</strong></h6>
-                    <h6>Service UUID: 0000ffe0-0000-1000-8000-00805f9b34fb</h6>
-                    <h6>Characteristic UUID: 0000ffe1-0000-1000-8000-00805f9b34fb</h6>
-                </div>
+            <button id="infoButton"><i class="fas fa-info-circle"></i></button>
+            <div class="info-content" id="infoContent">
+                <h6><strong>Web BLE Terminal</strong></h6>
+                <h6><strong>Device: JDY-33</strong></h6>
+                <h6>Service UUID: 0000ffe0-0000-1000-8000-00805f9b34fb</h6>
+                <h6>Characteristic UUID: 0000ffe1-0000-1000-8000-00805f9b34fb</h6>
+                <footer class="text-center py-2" style="color: rgb(218, 79, 79)">
+                    &copy; PTIT TEAM
+                </footer>
+            </div>
         </div>
-        <button class="btn btn-primary-scan" id="toggleButton" onclick="toggleFunction()">Scan</button>
-        <a class="navbar-brand" href="#" id="navbarTitle" style="color: rgb(218, 79, 79)">Not Connected</a>
         </div>
     </nav>
-    <div class="custom-border container">
-        <div class="d-flex align-items-center">
-            <img src="ble_logo.png" alt="Bluetooth Logo" class="mb-1" width="22" height="22">
-            <h5 class="card-title mt-2">BLE Terminal</h5>
-        </div>
             <div class="row">
-                <div class="col-sm-12 mb-2">
-                <textarea spellcheck="false" class="form-control text-log monospace" id="textareaNotification" style="height: 440px"></textarea>
+                <div class="col mb-2">
+                <textarea spellcheck="false" class="form-control text-log monospace" id="textareaNotification" style="height: 500px"></textarea>
                 </div>
             </div>
             <div class="row mt-1 mb-1 ">
                 <input id="input" type="text" class="input ml-3" placeholder="Send Message ->...">
-                <button class="ml-auto mr-3 btn-primary send-button" id="btsend" onclick="send()"><i class="fas fa-paper-plane"></i></button>
+                <button class="btn-primary ml-1 mr-3" id="btsend" onclick="send()">Send</button>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" id="CheckNL">
+                    <label class="form-check-label">NL</label>
+                </div>
             </div>      
             <div class="row mb-2">
                 <div class="form-check form-check-inline ml-3">
@@ -135,19 +150,15 @@
                 </div>
                 <div class="form-check form-check-inline">
                     <input type="checkbox" class="form-check-input" id="Checkbox" onchange="Checkshowtime()">
-                    <label class="form-check-label" for="Checkbox">Time</label>
+                    <label class="form-check-label" for="Checkbox">Timestamp</label>
                 </div>
                 <div class="ml-auto">
                     <button class="mr-1 btn-primary" onclick="clearTextarea()">Clear</button>
                     <button class="mr-3 btn-primary" onclick="copyToClipboard()">Copy</button>
                 </div>
             </div>   
-    </div>
     <script src="script.js"></script>
 </body>
-    <footer class="bg-dark text-center py-2" style="color: rgb(218, 79, 79)">
-        &copy; PTIT TEAM
-    </footer>
 
     <!-- Sử dụng Bootstrap JavaScript (nếu cần) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -193,7 +204,7 @@
             })
             .then(characteristic => {
                 logstatus(dev.name);
-                button.innerText = "Reconnect";
+                document.getElementById("buttonText").innerText = "Rescan";
             gattCharacteristic = characteristic
             gattCharacteristic.addEventListener('characteristicvaluechanged', handleChangedValue)
             return gattCharacteristic.startNotifications()
@@ -201,7 +212,7 @@
         .catch(error => {
             if (error instanceof DOMException && error.name === 'NotFoundError' && error.message === 'User cancelled the requestDevice() chooser.') {
             console.log("Người dùng đã hủy yêu cầu kết nối thiết bị.");
-            logstatus("Not Connected");
+            logstatus("Scan to connect");
             } else {
             console.log("Không thể kết nối với thiết bị: " + error);
             logstatus("ERROR");
@@ -210,7 +221,7 @@
         }}
         function disconnect()
 		{
-            logstatus("Not Connected");
+            logstatus("Scan to connect");
             console.log("Đã ngắt kết nối với: " + dev.name);
             return dev.gatt.disconnect();
 		}
@@ -219,10 +230,17 @@
         //     alert('Hãy nhấn nút Scan để bắt đầu tìm kiếm thiết bị Blutooth');
         // };
         function send()
-		{
+		{   const checkNewline = document.getElementById("CheckNL");
 			var data = document.getElementById("input").value;
 			log("You -> " + data + "\n");
-			gattCharacteristic.writeValue(str2ab(data+"\n"))
+            if(checkNewline.checked){
+			gattCharacteristic.writeValue(str2ab(data+"\n"));
+            console.log("Checked NL");
+            }
+            else{
+                gattCharacteristic.writeValue(str2ab(data)); 
+                console.log("NL");
+            }
 			document.getElementById("input").value = "";
 		}
         function str2ab(str)
@@ -289,7 +307,11 @@
     //Hiển thị văn bản
     function log(text) {
         const now = new Date();
-        const prefixlog = now.getHours() + ':' + now.getMinutes() + ':'  + now.getSeconds() + '.' + now.getMilliseconds() + ' -> ';
+            const hours = ('0' + now.getHours()).slice(-2);
+            const minutes = ('0' + now.getMinutes()).slice(-2);
+            const seconds = ('0' + now.getSeconds()).slice(-2);
+            const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
+            const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
            if(check) $('.text-log').val($('.text-log').val() + prefixlog + text );
            else  $('.text-log').val($('.text-log').val() + text);
         }
@@ -299,7 +321,7 @@
         if (button.innerText == "Scan") {
             requestBluetoothDevice();
         } else {
-            button.innerText = "Scan";
+            document.getElementById("buttonText").innerText = "Scan";
             disconnect();
             requestBluetoothDevice();
         }
