@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BLE JDY-33</title>
+    <title>BLE Term</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -21,13 +21,7 @@
             font-size: 24px;
         }
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
             border-radius: 3px;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
         }
         .alert-info {
             background-color: #17a2b8;
@@ -71,9 +65,9 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark shadow">
         <div class="container">
-          <a class="navbar-brand" href="#" id="navbarTitle">NOT CONNECTED</a>
+          <a class="navbar-brand" href="#" id="navbarTitle">Not Connected</a>
           <div class="d-flex">
-            <button class="btn btn-primary" id="toggleButton" onclick="toggleFunction()">SCAN</button>
+            <button class="btn btn-primary" id="toggleButton" onclick="toggleFunction()">Scan</button>
           </div>
         </div>
     </nav>
@@ -93,15 +87,19 @@
                 </div>
             </div>
             <div class="row">
-            <div class="form-check form-check-inline ml-3">
-                <input type="checkbox" class="form-check-input" id="Checkauto" onchange="Checkautoscroll()">
-                <label class="form-check-label" for="myCheckbox">Autoscroll</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" id="Checkbox" onchange="Checkshowtime()">
-                <label class="form-check-label" for="Checkbox">Time</label>
-            </div>
-            </div>
+                <div class="form-check form-check-inline ml-3">
+                    <input type="checkbox" class="form-check-input" id="Checkauto" onchange="Checkautoscroll()">
+                    <label class="form-check-label" for="myCheckbox">Autoscroll</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" id="Checkbox" onchange="Checkshowtime()">
+                    <label class="form-check-label" for="Checkbox">Time</label>
+                </div>
+                <div class="ml-auto">
+                    <button class="mr-1 btn-primary" onclick="clearTextarea()">Clear output</button>
+                    <button class="mr-3 btn-primary" onclick="copyToClipboard()">Copy</button>
+                </div>
+            </div>            
         </div>
     </div>
 </body>
@@ -130,7 +128,7 @@
         }
         function requestBluetoothDevice() {
             if(isWebBluetoothEnabled){
-        logstatus('FINDING...');
+        logstatus('Finding...');
         navigator.bluetooth.requestDevice({
             filters: [{
                 services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }] 
@@ -143,17 +141,17 @@
         })
         .then(server => {
                 console.log('Getting GATT Service...');
-                logstatus('GET Ser...');
+                logstatus('Get Ser...');
                 return server.getPrimaryService(bleService);
             })
             .then(service => {
                 console.log('Getting GATT Characteristic...');
-                logstatus('GET Cha... ');
+                logstatus('Get Cha... ');
                 return service.getCharacteristic(bleCharacteristic);
             })
             .then(characteristic => {
                 logstatus(dev.name);
-                button.innerText = "DISCONNECT";
+                button.innerText = "Reconnect";
             gattCharacteristic = characteristic
             gattCharacteristic.addEventListener('characteristicvaluechanged', handleChangedValue)
             return gattCharacteristic.startNotifications()
@@ -161,7 +159,7 @@
         .catch(error => {
             if (error instanceof DOMException && error.name === 'NotFoundError' && error.message === 'User cancelled the requestDevice() chooser.') {
             console.log("Người dùng đã hủy yêu cầu kết nối thiết bị.");
-            logstatus("NOT CONNECTED");
+            logstatus("Not Connected");
             } else {
             console.log("Không thể kết nối với thiết bị: " + error);
             logstatus("ERROR");
@@ -170,14 +168,14 @@
         }}
         function disconnect()
 		{
-            logstatus("NOT CONNECTED");
+            logstatus("Not Connected");
             console.log("Đã ngắt kết nối với: " + dev.name);
             return dev.gatt.disconnect();
 		}
         //Hiện thông báo
-        window.onload = function() {
-            alert('Hãy nhấn nút SCAN để bắt đầu tìm kiếm thiết bị Blutooth');
-        };
+        // window.onload = function() {
+        //     alert('Hãy nhấn nút Scan để bắt đầu tìm kiếm thiết bị Blutooth');
+        // };
         function send()
 		{
 			var data = document.getElementById("input").value;
@@ -257,18 +255,30 @@
     const button = document.getElementById("toggleButton");
     function toggleFunction() {
 
-        if (button.innerText == "SCAN") {
+        if (button.innerText == "Scan") {
             requestBluetoothDevice();
             // isScanning = false;
         } else {
-            button.innerText = "SCAN";
+            button.innerText = "Scan";
             disconnect();
+            requestBluetoothDevice();
             // isScanning = true;
         }
     }
     function  logstatus(text){
         const navbarTitle = document.getElementById('navbarTitle');
         navbarTitle.textContent = text;
+    }
+    
+    function clearTextarea() {
+    document.getElementById('textareaNotification').value = '';
+    }
+
+    function copyToClipboard() {
+        var textarea = document.getElementById('textareaNotification');
+        textarea.select();
+        document.execCommand('copy');
+        // alert('Text copied to clipboard');
     }
     if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('office.js');
