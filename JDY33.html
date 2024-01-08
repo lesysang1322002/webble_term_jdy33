@@ -16,9 +16,9 @@
         }
         .navbar {
             background-color: #343a40;
-        }
-        .navbar-brand {
-            font-size: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .btn-primary {
             border-radius: 3px;
@@ -36,9 +36,6 @@
             background-color: #17a2b8;
             color: #fff;
         }
-        h4 {
-            color: #f32727;
-        }
         body h6 {
             font-size: 12px;
         }
@@ -52,10 +49,30 @@
         }
         .input-container {
         display: inline-block;
+        align-items: center;
         }
-
+        #infoButton {
+        background-color: #343a40;;
+        color: white;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        }
+        .info-content {
+        display: none;
+        position: absolute;
+        top: 5px; 
+        left: 5px;
+        background-color: #f1f1f1;
+        padding: 2px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        white-space: pre-line; /* Hiển thị thông tin theo hàng dòng */
+        line-height: 0.1;
+        }
         .input {
-            width: 40%;
+            width: 78%;
         }
 
         .btsend {
@@ -65,34 +82,37 @@
         #textareaNotification {
             font-size: 12px; 
         }
+        #navbarTitle {
+        margin: 0 auto; /* Căn giữa văn bản "Not Connected" */
+        }
     </style>
-    <!-- <link rel="manifest" href="manifest.json" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- <link rel="manifest" href="manifest.json" /> -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700">
     <!-- Sử dụng Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow" style="padding-left: 0px;">
         <div class="container">
-          <a class="navbar-brand" href="#" id="navbarTitle">Not Connected</a>
-          <div class="d-flex">
-            <button class="btn btn-primary-scan" id="toggleButton" onclick="toggleFunction()">Scan</button>
-          </div>
+        <div class="info-container">
+                <button id="infoButton"><i class="fas fa-info-circle"></i></button>
+                <div class="info-content" id="infoContent">
+                    <h6><strong>Web BLE Terminal</strong></h6>
+                    <h6><strong>Device: JDY-33</strong></h6>
+                    <h6>Service UUID: 0000ffe0-0000-1000-8000-00805f9b34fb</h6>
+                    <h6>Characteristic UUID: 0000ffe1-0000-1000-8000-00805f9b34fb</h6>
+                </div>
+        </div>
+        <button class="btn btn-primary-scan" id="toggleButton" onclick="toggleFunction()">Scan</button>
+        <a class="text-center navbar-brand" href="#" id="navbarTitle">Not Connected</a>
         </div>
     </nav>
     <div class="custom-border container">
-        <h4 class="text-center mt-2"><strong>JDY-33</strong></h4>
-        <h6 class="text-center mt-2">Service UUID: 0000ffe0-0000-1000-8000-00805f9b34fb</h6>
-        <h6 class="text-center">Characteristic UUID: 0000ffe1-0000-1000-8000-00805f9b34fb</h6>
-        <div class="card card-body">
-            <h5 class="card-title">TERMINAL</h5>
-            <div class="input-container">
-                <input id="input" type="text" class="input" placeholder="New Message ->...">
-                <button class="btn-primary" id="btsend" onclick="send()">Send</button>
-            </div>
+            <h5 class="card-title mt-2">TERMINAL</h5>
             <div class="row">
-                <div class="col-sm-12 mb-3 mt-2">
-                    <textarea spellcheck="false" class="form-control text-log monospace" id="textareaNotification" style="height: 320px"></textarea>
+                <div class="col-sm-12 mb-2">
+                <textarea spellcheck="false" class="form-control text-log monospace" id="textareaNotification" style="height: 350px"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -108,9 +128,13 @@
                     <button class="mr-1 btn-primary" onclick="clearTextarea()">Clear</button>
                     <button class="mr-3 btn-primary" onclick="copyToClipboard()">Copy</button>
                 </div>
-            </div>            
-        </div>
+            </div> 
+            <div class="row mt-2 mb-2 ">
+                    <input id="input" type="text" class="input ml-3" placeholder="Send Message ->...">
+                    <button class="ml-auto mr-3 btn-primary" id="btsend" onclick="send()">Send</button>
+            </div>        
     </div>
+    <script src="script.js"></script>
 </body>
     <footer class="bg-dark text-white text-center py-2">
         &copy; PTIT TEAM
@@ -150,12 +174,12 @@
         })
         .then(server => {
                 console.log('Getting GATT Service...');
-                logstatus('Get Ser...');
+                logstatus('Get Service');
                 return server.getPrimaryService(bleService);
             })
             .then(service => {
                 console.log('Getting GATT Characteristic...');
-                logstatus('Get Cha... ');
+                logstatus('Get Characteristic');
                 return service.getCharacteristic(bleCharacteristic);
             })
             .then(characteristic => {
