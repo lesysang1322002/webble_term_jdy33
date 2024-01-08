@@ -27,7 +27,6 @@
             border-color: #000 !important; /* Màu đen cho viền */
         }
         .btn-primary-scan {
-            font-size: 18px;
             border-radius: 3px;
             color: #ffffff !important; /* Chữ màu đen */
             background-color: #2f67b0 !important; /* Nền trắng */
@@ -261,18 +260,15 @@
            if(check) $('.text-log').val($('.text-log').val() + prefixlog + text );
            else  $('.text-log').val($('.text-log').val() + text);
         }
-    // let isScanning = true;
     const button = document.getElementById("toggleButton");
     function toggleFunction() {
 
         if (button.innerText == "Scan") {
             requestBluetoothDevice();
-            // isScanning = false;
         } else {
             button.innerText = "Scan";
             disconnect();
             requestBluetoothDevice();
-            // isScanning = true;
         }
     }
     function  logstatus(text){
