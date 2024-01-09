@@ -110,6 +110,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <div class="content">
     <nav class="navbar navbar-expand-lg navbar-dark shadow" style="padding: 0px 0px;">
         <button class="btn btn-primary-scan" id="toggleButton" onclick="toggleFunction()">
             <span id="buttonText">Scan</span><img src="ble_logo.png" alt="Scan Icon">  
@@ -127,13 +128,14 @@
                 </footer>
             </div>
         </div>
-        </div>
     </nav>
             <div class="row">
                 <div class="col mb-2">
-                <textarea spellcheck="false" class="form-control text-log monospace" id="textareaNotification"style="height: 550px;" ></textarea>
+                    <textarea  class="form-control monospace" id="textareaNotification" readonly="" style="height: 550px;"></textarea>
                 </div>
             </div>
+        </div>
+    <div class="footer">
             <div class="row mt-1 mb-1 ">
                 <input id="input" type="text" class="input ml-3" placeholder="Send Message ->...">
                 <button class="btn-primary ml-1 mr-2" id="btsend" onclick="send()">Send</button>
@@ -155,7 +157,8 @@
                     <button class="mr-1 btn-primary" onclick="clearTextarea()">Clear</button>
                     <button class="mr-3 btn-primary" onclick="copyToClipboard()">Copy</button>
                 </div>
-            </div>   
+            </div> 
+    </div>
     <script src="script.js"></script>
 </body>
 
@@ -252,19 +255,19 @@
 			return buf;
 		}
         function scrollToBottom() {
-        var textarea = document.getElementById("textareaNotification");
-        textarea.scrollTop = textarea.scrollHeight;
+            var textarea = document.getElementById("textareaNotification");
+            textarea.scrollTop = textarea.scrollHeight;
         }
 
         let checkautoscroll=true;
-        const checkbox = document.getElementById("Checkauto");
-        checkbox.checked=true;
-        function Checkautoscroll() {
-            if (checkbox.checked) {
-                checkautoscroll=true;
-            } else {
-                checkautoscroll=false;
-            }
+            const checkbox = document.getElementById("Checkauto");
+            checkbox.checked=true;
+            function Checkautoscroll() {
+                if (checkbox.checked) {
+                    checkautoscroll=true;
+                } else {
+                    checkautoscroll=false;
+                }
         }
         let check;
         function Checkshowtime() {
@@ -312,7 +315,7 @@
             const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
             const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
            if(check) $('.text-log').val($('.text-log').val() + prefixlog + text );
-           else  $('.text-log').val($('.text-log').val() + text);
+           else document.getElementById("textareaNotification").value += text;
         }
     const button = document.getElementById("toggleButton");
     function toggleFunction() {
