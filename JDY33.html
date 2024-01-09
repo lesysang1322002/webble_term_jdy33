@@ -314,7 +314,7 @@
             const seconds = ('0' + now.getSeconds()).slice(-2);
             const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
             const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
-           if(check) $('.text-log').val($('.text-log').val() + prefixlog + text );
+           if(check) document.getElementById("textareaNotification").value += prefixlog + text ;
            else document.getElementById("textareaNotification").value += text;
         }
     const button = document.getElementById("toggleButton");
