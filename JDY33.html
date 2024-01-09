@@ -80,7 +80,7 @@
             line-height: 0.1;
         }
         .input {
-            width: 66%;
+            width: 55%;
         }
         .btsend {
             width: 8%;
@@ -141,7 +141,7 @@
                 <button class="btn-primary ml-1 mr-2" id="btsend" onclick="send()">Send</button>
                 <div class="form-check form-check-inline">
                     <input type="checkbox" class="form-check-input" id="CheckNL">
-                    <label class="form-check-label">NL</label>
+                    <label class="form-check-label">Newline</label>
                 </div>
             </div>      
             <div class="row mb-1">
@@ -155,7 +155,7 @@
                 </div>
                 <div class="ml-auto">
                     <button class="mr-1 btn-primary" onclick="clearTextarea()">Clear</button>
-                    <button class="mr-3 btn-primary" onclick="copyToClipboard()">Copy</button>
+                    <button class="mr-4 btn-primary" onclick="copyToClipboard()">Copy</button>
                 </div>
             </div> 
     </div>
@@ -308,7 +308,7 @@
     }
     //Hiển thị văn bản
     function log(text) {
-        const now = new Date();
+            const now = new Date();
             const hours = ('0' + now.getHours()).slice(-2);
             const minutes = ('0' + now.getMinutes()).slice(-2);
             const seconds = ('0' + now.getSeconds()).slice(-2);
