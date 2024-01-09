@@ -19,6 +19,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
         }
         .btn-primary {
             border-radius: 3px;
@@ -90,6 +94,7 @@
         }
         #textareaNotification {
             font-size: 12px; 
+            height: 100vh;
         }
         #navbarTitle {
         margin: 0 auto; /* Căn giữa văn bản "Scan to connect" */
@@ -101,8 +106,16 @@
         cursor: pointer;
         font-size: 20px;
         }
+        .footer {
+        background-color: #ffffff;
+        color: #000000;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        }
 
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/autosize@5.0.0/dist/autosize.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <!-- <link rel="manifest" href="manifest.json" /> -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700">
@@ -131,7 +144,7 @@
     </nav>
             <div class="row">
                 <div class="col mb-2">
-                    <textarea  class="form-control monospace" id="textareaNotification" readonly="" style="height: 550px;"></textarea>
+                    <textarea  class="form-control monospace" id="textareaNotification" readonly=""></textarea>
                 </div>
             </div>
         </div>
@@ -314,7 +327,7 @@
             const seconds = ('0' + now.getSeconds()).slice(-2);
             const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
             const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
-           if(check) document.getElementById("textareaNotification").value += prefixlog + text ;
+           if(check) document.getElementById("textareaNotification").value += prefixlog + text;
            else document.getElementById("textareaNotification").value += text;
         }
     const button = document.getElementById("toggleButton");
