@@ -123,6 +123,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <div class="container">
     <div class="content">
     <nav class="navbar navbar-expand-lg navbar-dark shadow" style="padding: 0px 0px;">
         <button class="btn btn-primary-scan" id="toggleButton" onclick="toggleFunction()">
@@ -143,11 +144,11 @@
         </div>
     </nav>
             <div class="row">
-                <div class="col"  style="padding-right: 0;">
+                <div class="col">
                     <textarea  class="form-control monospace" id="textareaNotification" readonly=""></textarea>
                 </div>
             </div>
-        </div>
+    </div>
     <div class="footer">
             <div class="row mt-1 mb-1 ">
                 <input id="input" type="text" class="input ml-3" placeholder="Send Message ->...">
@@ -166,12 +167,13 @@
                     <input type="checkbox" class="form-check-input" id="Checkbox" onchange="Checkshowtime()">
                     <label class="form-check-label" for="Checkbox">Timestamp</label>
                 </div>
-                <div class="ml-auto">
-                    <button class="mr-1 btn-primary" onclick="clearTextarea()">Clear</button>
-                    <button class="mr-3 btn-primary" onclick="copyToClipboard()">Copy</button>
-                </div>
+                <div class="container ml-auto">
+                    <button class="btn-primary" onclick="clearTextarea()">Clear</button>
+                    <button class="btn-primary" onclick="copyToClipboard()">Copy</button>
+                </div>                
             </div> 
     </div>
+</div>
     <script src="script.js"></script>
 </body>
 
