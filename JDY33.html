@@ -7,7 +7,6 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            height: 100vh;
             box-sizing: border-box;
         }
         .custom-border {
@@ -21,10 +20,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
         }
         .btn-primary {
             border-radius: 3px;
@@ -37,15 +32,15 @@
             align-items: center;
             margin: 5px;
             /* position: relative; */
-            color:  #2f67b0!important; 
+            color:  #1554a7!important; 
             background-color: #ffffff !important; 
             border-color:  #ffffff !important;
             max-width: 100%; /* Đảm bảo kích thước tối đa không vượt quá kích thước của phần tử cha */
             height: auto; 
         }
         .btn-primary-scan img {
-        width: 20px; /* Đặt kích thước chiều rộng mong muốn */
-        height: auto;
+            width: 20px; /* Đặt kích thước chiều rộng mong muốn */
+            height: auto;
         }
         .alert-info {
             background-color: #17a2b8;
@@ -63,27 +58,27 @@
             color: #fff;
         }
         .input-container {
-        display: inline-block;
-        align-items: center;
+            display: inline-block;
+            align-items: center;
         }
         #infoButton {
-        background-color: #343a40;;
-        color: white;
-        border: none;
-        font-size: 14px;
-        cursor: pointer;
+            background-color: #343a40;;
+            color: white;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
         }
         .info-content {
-        display: none;
-        position: absolute;
-        top: 5px; 
-        left: 5px;
-        background-color: #f1f1f1;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-        white-space: pre-line; /* Hiển thị thông tin theo hàng dòng */
-        line-height: 0.1;
+            display: none;
+            position: absolute;
+            top: 5px; 
+            left: 5px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            white-space: pre-line; /* Hiển thị thông tin theo hàng dòng */
+            line-height: 0.1;
         }
         .input {
             width: 66%;
@@ -94,27 +89,18 @@
         }
         #textareaNotification {
             font-size: 12px; 
-            height: 100vh;
             padding: 0;
         }
         #navbarTitle {
-        margin: 0 auto; /* Căn giữa văn bản "Scan to connect" */
-        font-size: 16px; 
+            margin: 0 auto; /* Căn giữa văn bản "Scan to connect" */
+            font-size: 16px; 
         }
         .send-button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
         }
-        .footer {
-        background-color: #ffffff;
-        color: #000000;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        }
-
     </style>
     <script src="https://cdn.jsdelivr.net/npm/autosize@5.0.0/dist/autosize.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -145,7 +131,7 @@
     </nav>
             <div class="row">
                 <div class="col"  style="padding-right: 0;">
-                    <textarea  class="form-control monospace" id="textareaNotification" readonly=""></textarea>
+                    <textarea  class="form-control monospace" id="textareaNotification" readonly="" style="height: 530px"></textarea>
                 </div>
             </div>
         </div>
