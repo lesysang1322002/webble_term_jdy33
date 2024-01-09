@@ -237,11 +237,11 @@
 			log("You -> " + data + "\n");
             if(checkNewline.checked){
 			gattCharacteristic.writeValue(str2ab(data+"\n"));
-            console.log("Checked NL");
+            console.log("Checked newline");
             }
             else{
                 gattCharacteristic.writeValue(str2ab(data)); 
-                console.log("NL");
+                console.log("Not check newline");
             }
 			document.getElementById("input").value = "";
 		}
