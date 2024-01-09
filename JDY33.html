@@ -16,7 +16,6 @@
             font-family: 'Roboto Mono', monospace;
         }
         .navbar {
-            background-color: #343a40;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -32,9 +31,9 @@
             align-items: center;
             margin: 5px;
             /* position: relative; */
-            color:  #1554a7!important; 
-            background-color: #ffffff !important; 
-            border-color:  #ffffff !important;
+            color:  #ffffff!important; 
+            background-color: #4c5765 !important; 
+            border-color:  #000000 !important;
             max-width: 100%; /* Đảm bảo kích thước tối đa không vượt quá kích thước của phần tử cha */
             height: auto; 
         }
@@ -62,8 +61,8 @@
             align-items: center;
         }
         #infoButton {
-            background-color: #343a40;;
-            color: white;
+            background: #ffffff;
+            color: rgb(38, 15, 15);
             border: none;
             font-size: 14px;
             cursor: pointer;
@@ -111,7 +110,7 @@
 </head>
 <body>
     <div class="content">
-    <nav class="navbar navbar-expand-lg navbar-dark shadow" style="padding: 0px 0px;">
+    <nav class="navbar" style="padding: 0px 0px;">
         <button class="btn btn-primary-scan" id="toggleButton" onclick="toggleFunction()">
             <span id="buttonText">Scan</span><img src="ble_logo.png" alt="Scan Icon">  
         </button>
