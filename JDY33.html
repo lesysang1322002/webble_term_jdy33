@@ -37,7 +37,8 @@
             height: auto; 
         }
         .btn-primary-scan img {
-            width: 20px; /* Đặt kích thước chiều rộng mong muốn */
+            padding-bottom: 2px;
+            width: 22px; /* Đặt kích thước chiều rộng mong muốn */
             height: auto;
         }
         .alert-info {
@@ -60,10 +61,12 @@
             align-items: center;
         }
         #infoButton {
+            margin-top: 5px;
+            margin-bottom: 5px;
             background: #ffffff;
             color: rgb(38, 15, 15);
             border: none;
-            font-size: 14px;
+            font-size: 17px;
             cursor: pointer;
         }
         .info-content {
@@ -112,7 +115,7 @@
     <div class="content">
     <nav class="navbar" style="padding: 0px 0px;">
         <button class="btn btn-primary-scan" id="toggleButton" onclick="toggleFunction()">
-            <span id="buttonText">Scan</span><img src="ble_logo.png" alt="Scan Icon">  
+            <img src="ble_logo.png" alt="Scan Icon"><span id="buttonText">Scan</span>  
         </button>
         <a class="navbar-brand" href="#" id="navbarTitle" style="color: rgb(218, 79, 79)">Scan to connect</a>
         <div class="info-container">
@@ -128,34 +131,34 @@
             </div>
         </div>
     </nav>
-            <div class="row">
-                <div class="col"  style="padding-right: 0;">
-                    <textarea  class="form-control monospace" id="textareaNotification" readonly="" style="height: 560px"></textarea>
-                </div>
-            </div>
+    <hr style="margin:0">
+    <div class="row">
+        <div class="form-check form-check-inline ml-3">
+            <input type="checkbox" class="form-check-input" id="Checkauto" onchange="Checkautoscroll()">
+            <label class="form-check-label" for="myCheckbox">Autoscroll</label>
         </div>
+        <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="Checkbox" onchange="Checkshowtime()">
+            <label class="form-check-label" for="Checkbox">Timestamp</label>
+        </div>
+        <div class="ml-auto">
+            <button class="mr-1 btn-primary" onclick="clearTextarea()">Clear</button>
+            <button class="mr-3 btn-primary" onclick="copyToClipboard()">Copy</button>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col"  style="padding-right: 0;">
+            <textarea  class="form-control monospace" id="textareaNotification" readonly="" style="height: 560px"></textarea>
+        </div>
+    </div>
     <div class="footer">
-            <div class="row mb-1">
+            <div class="row">
                 <input id="input" type="text" class="input ml-3" placeholder="Send Message ->...">
-                <button class="btn-primary ml-1 mr-2" id="btsend" onclick="send()">Send</button>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline ml-2">
                     <input type="checkbox" class="form-check-input" id="CheckNL">
                     <label class="form-check-label">Newline</label>
                 </div>
-            </div>      
-            <div class="row mb-1">
-                <div class="form-check form-check-inline ml-3">
-                    <input type="checkbox" class="form-check-input" id="Checkauto" onchange="Checkautoscroll()">
-                    <label class="form-check-label" for="myCheckbox">Autoscroll</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="Checkbox" onchange="Checkshowtime()">
-                    <label class="form-check-label" for="Checkbox">Timestamp</label>
-                </div>
-                <div class="ml-auto">
-                    <button class="mr-1 btn-primary" onclick="clearTextarea()">Clear</button>
-                    <button class="mr-4 btn-primary" onclick="copyToClipboard()">Copy</button>
-                </div>
+                <button class="btn-primary" id="btsend" onclick="send()">Send</button>
             </div> 
     </div>
     <script src="script.js"></script>
@@ -268,7 +271,7 @@
                     checkautoscroll=false;
                 }
         }
-        let check;
+        let check=false;
         function Checkshowtime() {
             const checkbox = document.getElementById("Checkbox");
             if (checkbox.checked) {
@@ -277,20 +280,33 @@
                check=false;
             }
         }
-        
+        // let checkpre=false;
         function handleChangedValue(event) {
         // let data = event.target.value;
         // let i=0;
+        // console.log('Received data:', data);
         // // Khởi tạo một mảng để chứa dữ liệu từ mảng uint8_t
         // let dataArray = new Uint8Array(data.buffer);
         // // Khởi tạo chuỗi để chứa dữ liệu từ mảng uint8_t
         // let valueString = '';
+        // log("|");
         // // Lặp qua mảng để trích xuất dữ liệu từng phần tử
+        // let n=dataArray.length;
+        // let kytu=String.fromCharCode(dataArray[n-1]);
         // for (i; i < dataArray.length; i++) {
+        //     checkpre=false;
         //     valueString += String.fromCharCode(dataArray[i]);
+        //     valueString = valueString.replace(/(\r)/gm, '');
+        //     if(String.fromCharCode(dataArray[i])=="\r"){
+        //         // console.log("Newline" + String.fromCharCode(dataArray[i]));
+        //         // if(check){
+        //         //     logtime();
+        //         // }
+        //         // checkpre=true;
+        //         // log("|");
+        //     }
         // }
-        // var now = new Date();
-        // console.log(valueString);
+        // console.log('Convert2Str:',valueString);
         // log(valueString);
         // if(checkautoscroll) scrollToBottom();
         let data = event.target.value;
@@ -307,15 +323,27 @@
     }
     //Hiển thị văn bản
     function log(text) {
-            const now = new Date();
-            const hours = ('0' + now.getHours()).slice(-2);
-            const minutes = ('0' + now.getMinutes()).slice(-2);
-            const seconds = ('0' + now.getSeconds()).slice(-2);
-            const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
-            const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
-           if(check) document.getElementById("textareaNotification").value += prefixlog + text;
-           else document.getElementById("textareaNotification").value += text;
-        }
+        const now = new Date();
+        const hours = ('0' + now.getHours()).slice(-2);
+        const minutes = ('0' + now.getMinutes()).slice(-2);
+        const seconds = ('0' + now.getSeconds()).slice(-2);
+        const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
+        const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
+            if(check) {
+        // console.log("Both check=true and checkpre=tre");
+        document.getElementById("textareaNotification").value += prefixlog + text;
+         }
+        else document.getElementById("textareaNotification").value += text;
+    }
+    function logtime(){
+        const now = new Date();
+        const hours = ('0' + now.getHours()).slice(-2);
+        const minutes = ('0' + now.getMinutes()).slice(-2);
+        const seconds = ('0' + now.getSeconds()).slice(-2);
+        const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
+        const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
+        document.getElementById("textareaNotification").value += prefixlog;
+    }
     const button = document.getElementById("toggleButton");
     function toggleFunction() {
 
