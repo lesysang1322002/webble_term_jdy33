@@ -285,31 +285,28 @@
         function handleChangedValue(event) {
         // let data = event.target.value;
         // let i=0;
-        // console.log('Received data:', data);
+        // // console.log('Received data:', data);
         // // Khởi tạo một mảng để chứa dữ liệu từ mảng uint8_t
         // let dataArray = new Uint8Array(data.buffer);
         // // Khởi tạo chuỗi để chứa dữ liệu từ mảng uint8_t
         // let valueString = '';
-        // log("|");
         // // Lặp qua mảng để trích xuất dữ liệu từng phần tử
         // let n=dataArray.length;
-        // let kytu=String.fromCharCode(dataArray[n-1]);
-        // for (i; i < dataArray.length; i++) {
-        //     checkpre=false;
+        // // let kytu=String.fromCharCode(dataArray[n-1]);
+        // for (let i = 0; i < dataArray.length; i++) {
+        //     let char = String.fromCharCode(dataArray[i]);
         //     valueString += String.fromCharCode(dataArray[i]);
-        //     valueString = valueString.replace(/(\r)/gm, '');
-        //     if(String.fromCharCode(dataArray[i])=="\r"){
-        //         // console.log("Newline" + String.fromCharCode(dataArray[i]));
-        //         // if(check){
-        //         //     logtime();
-        //         // }
-        //         // checkpre=true;
-        //         // log("|");
+        //     if(char.charCodeAt(0)==10) {
+        //         break;
         //     }
+        //     console.log(char.charCodeAt(0)); // In ra mã ASCII của từng ký tự
         // }
+
+        // valueString = valueString.replace(/(\r)/gm, '');
         // console.log('Convert2Str:',valueString);
         // log(valueString);
         // if(checkautoscroll) scrollToBottom();
+        //test
         let data = event.target.value;
         console.log('Received data:', data);
         let dataArray = new Uint8Array(data.buffer);
@@ -317,12 +314,20 @@
         let textDecoder = new TextDecoder('utf-8');
         let valueString = textDecoder.decode(dataArray);
         valueString = valueString.replace(/(\r)/gm, '');
-        var now = new Date();
-        console.log('Convert2Str:',valueString);
         log(valueString);
+        // let indexOfNewline = valueString.indexOf('\n');
+
+        // // Chia chuỗi thành hai bằng cách sử dụng substring
+        // let string1 = valueString.substring(0, indexOfNewline);
+        // let string2 = valueString.substring(indexOfNewline + 1);
+
+        // console.log(string1);  // Kết quả: "Chuỗi 1"
+        // console.log(string2);  // Kết quả: "Chuỗi 2"
+        console.log('Convert2Str:',valueString);
         if (checkautoscroll) scrollToBottom();
     }
     //Hiển thị văn bản
+    let logExecuted = false;
     function log(text) {
         const now = new Date();
         const hours = ('0' + now.getHours()).slice(-2);
@@ -330,11 +335,17 @@
         const seconds = ('0' + now.getSeconds()).slice(-2);
         const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
         const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
+            if(!logExecuted && check){
+                document.getElementById("textareaNotification").value=prefixlog ;
+               logExecuted = true;
+            }
+            if(!check){
+                logExecuted=false;
+            }
             if(check) {
-        // console.log("Both check=true and checkpre=tre");
-        document.getElementById("textareaNotification").value += prefixlog + text;
-         }
-        else document.getElementById("textareaNotification").value += text;
+                text = text.replace(/\n/g,'\n'+prefixlog);
+            }
+            document.getElementById("textareaNotification").value += text;
     }
     function logtime(){
         const now = new Date();
