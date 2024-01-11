@@ -230,10 +230,6 @@
             console.log("Đã ngắt kết nối với: " + dev.name);
             return dev.gatt.disconnect();
 		}
-        //Hiện thông báo
-        // window.onload = function() {
-        //     alert('Hãy nhấn nút Scan để bắt đầu tìm kiếm thiết bị Blutooth');
-        // };
         function send()
 		{   const checkNewline = document.getElementById("CheckNL");
 			var data = document.getElementById("input").value;
@@ -281,7 +277,6 @@
                check=false;
             }
         }
-        // let checkpre=false;
         function handleChangedValue(event) {
         // let data = event.target.value;
         // let i=0;
@@ -315,33 +310,26 @@
         let valueString = textDecoder.decode(dataArray);
         valueString = valueString.replace(/(\r)/gm, '');
         log(valueString);
-        // let indexOfNewline = valueString.indexOf('\n');
-
-        // // Chia chuỗi thành hai bằng cách sử dụng substring
-        // let string1 = valueString.substring(0, indexOfNewline);
-        // let string2 = valueString.substring(indexOfNewline + 1);
-
-        // console.log(string1);  // Kết quả: "Chuỗi 1"
-        // console.log(string2);  // Kết quả: "Chuỗi 2"
         console.log('Convert2Str:',valueString);
         if (checkautoscroll) scrollToBottom();
     }
     //Hiển thị văn bản
-    let logExecuted = false;
+    let nextlsNewline;
     function log(text) {
+        if(nextlsNewline==true){
+            text='\n'+text;
+            nextlsNewline=false;
+        }
+        if (text.endsWith('\n')) {
+        text = text.slice(0, -1); // Loại bỏ ký tự cuối cùng
+        nextlsNewline=true;
+        }
         const now = new Date();
         const hours = ('0' + now.getHours()).slice(-2);
         const minutes = ('0' + now.getMinutes()).slice(-2);
         const seconds = ('0' + now.getSeconds()).slice(-2);
         const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
         const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
-            if(!logExecuted && check){
-                document.getElementById("textareaNotification").value=prefixlog ;
-               logExecuted = true;
-            }
-            if(!check){
-                logExecuted=false;
-            }
             if(check) {
                 text = text.replace(/\n/g,'\n'+prefixlog);
             }
@@ -365,6 +353,7 @@
             document.getElementById("buttonText").innerText = "Scan";
             disconnect();
             requestBluetoothDevice();
+            nextlsNewline=true;
         }
     }
     function  logstatus(text){
