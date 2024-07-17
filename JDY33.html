@@ -233,7 +233,7 @@
         function send()
 		{   const checkNewline = document.getElementById("CheckNL");
 			var data = document.getElementById("input").value;
-			log("You -> " + data + "\n");
+			// log("You -> " + data + "\n");
             if(checkNewline.checked){
 			gattCharacteristic.writeValue(str2ab(data+"\n"));
             console.log("Checked newline");
@@ -309,8 +309,8 @@
         let textDecoder = new TextDecoder('utf-8');
         let valueString = textDecoder.decode(dataArray);
         valueString = valueString.replace(/(\r)/gm, '');
-        log(valueString);
         console.log('Convert2Str:',valueString);
+        log(valueString);
         if (checkautoscroll) scrollToBottom();
     }
     //Hiển thị văn bản
@@ -330,10 +330,10 @@
         const seconds = ('0' + now.getSeconds()).slice(-2);
         const milliseconds = ('00' + now.getMilliseconds()).slice(-3);
         const prefixlog = hours + ':' + minutes + ':'  + seconds + '.' + milliseconds + ' -> ';
-            if(check) {
-                text = text.replace(/\n/g,'\n'+prefixlog);
-            }
-            document.getElementById("textareaNotification").value += text;
+        if(check) {
+            text = text.replace(/\n/g,'\n'+prefixlog);
+        }
+        document.getElementById("textareaNotification").value += text;
     }
     function logtime(){
         const now = new Date();
