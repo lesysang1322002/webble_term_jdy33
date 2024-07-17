@@ -233,7 +233,7 @@
         function send()
 		{   const checkNewline = document.getElementById("CheckNL");
 			var data = document.getElementById("input").value;
-			// log("You -> " + data + "\n");
+			log("You -> " + data + "\n");
             if(checkNewline.checked){
 			gattCharacteristic.writeValue(str2ab(data+"\n"));
             console.log("Checked newline");
